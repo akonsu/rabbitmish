@@ -1,46 +1,46 @@
 # -*- mode:coffee; coding:utf-8; -*- Time-stamp: <coloringbook.coffee - root>
 
+INNER_RADIUS = 10
+EDGE_THICKNESS = 5
+TOOL_RADIUS = INNER_RADIUS + EDGE_THICKNESS * 2
+
+drawing = false
+
 start = (container) ->
-  TOOL_RADIUS = 10
-  EDGE_THICKNESS = 5
-
-  radius = TOOL_RADIUS + EDGE_THICKNESS * 2
-
   canvas = container.appendChild document.createElement("canvas")
+
+  canvas.style.background = "#fff url('animals.png') no-repeat center"
+  canvas.width = 640
+  canvas.height = 475
+
   context = canvas.getContext "2d"
+
+  gradient = context.createRadialGradient TOOL_RADIUS, TOOL_RADIUS, INNER_RADIUS, TOOL_RADIUS, TOOL_RADIUS, TOOL_RADIUS
+  gradient.addColorStop 0, "rgba(0,0,0,1)"
+  gradient.addColorStop 1, "rgba(0,0,0,0)"
 
   image = document.createElement("img")
   image.src = "animals-bw.png"
   image.onload = () ->
     context.drawImage image, 0, 0
-
-#    gradient = context.createRadialGradient radius, radius, TOOL_RADIUS, radius, radius, radius
-#    gradient.addColorStop 0, "rgba(0,0,0,1)"
-#    gradient.addColorStop 1, "rgba(0,0,0,0)"
-
-#    context.globalCompositeOperation = "destination-out"
-#    context.fillStyle = gradient
-#    context.translate 100, 100
-#    context.fillRect 0, 0, radius * 2, radius * 2
-
-
-    canvas.onmousemove = mymove
-
-  mymove = (e) ->
-    x = e.pageX - canvas.offsetLeft
-    y = e.pageY - canvas.offsetTop
-
-    gradient = context.createRadialGradient x, y, TOOL_RADIUS, x, y, radius
-    gradient.addColorStop 0, "rgba(0,0,0,1)"
-    gradient.addColorStop 1, "rgba(0,0,0,0)"
-
-    context.globalCompositeOperation = "destination-out"
     context.fillStyle = gradient
-#    context.translate x - radius, y - radius
-    context.fillRect x - radius, y - radius, radius * 2, radius * 2
+    context.globalCompositeOperation = "destination-out"
 
-  canvas.style.background = "#fff url('animals.png') no-repeat center"
-  canvas.width = 640
-  canvas.height = 475
+    canvas.onmousedown = (e) ->
+      drawing = true
+      canvas.onmousemove e
+
+    canvas.onmousemove = (e) ->
+      if drawing
+        x = e.pageX - canvas.offsetLeft
+        y = e.pageY - canvas.offsetTop
+
+        context.save()
+        context.translate x - TOOL_RADIUS, y - TOOL_RADIUS
+        context.fillRect 0, 0, TOOL_RADIUS * 2, TOOL_RADIUS * 2
+        context.restore()
+
+    window.onmouseup = (e) -> drawing = false
+
 
 window["coloringbook_start"] = start
