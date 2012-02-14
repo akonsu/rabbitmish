@@ -1,10 +1,19 @@
 # -*- mode:coffee; coding:utf-8; -*- Time-stamp: <coloringbook.coffee - root>
 
-INNER_RADIUS = 10
-EDGE_THICKNESS = 5
-TOOL_RADIUS = INNER_RADIUS + EDGE_THICKNESS * 2
+AUTO_COMPLETE_PERCENT = 0.2
+LINE_WIDTH = 20
 
 drawing = false
+x_prev = y_prev = 0
+
+
+is_complete = (canvas) ->
+  context = canvas.getContext "2d"
+  data = context.getImageData(0, 0, canvas.width, canvas.height).data
+  count = 0
+  count += 1 for x, i in data when (i + 1) % 4 is 0 and x > 0
+  count < data.length * AUTO_COMPLETE_PERCENT / 4
+
 
 start = (container) ->
   canvas = container.appendChild document.createElement("canvas")
@@ -13,34 +22,38 @@ start = (container) ->
   canvas.width = 640
   canvas.height = 475
 
-  context = canvas.getContext "2d"
-
-  gradient = context.createRadialGradient TOOL_RADIUS, TOOL_RADIUS, INNER_RADIUS, TOOL_RADIUS, TOOL_RADIUS, TOOL_RADIUS
-  gradient.addColorStop 0, "rgba(0,0,0,1)"
-  gradient.addColorStop 1, "rgba(0,0,0,0)"
-
   image = document.createElement("img")
   image.src = "animals-bw.png"
-  image.onload = () ->
+  image.onload = ->
+    context = canvas.getContext "2d"
+
     context.drawImage image, 0, 0
-    context.fillStyle = gradient
-    context.globalCompositeOperation = "destination-out"
+    context.globalCompositeOperation = "copy"
+    context.lineCap = "round"
+    context.lineWidth = LINE_WIDTH
+    context.strokeStyle = "rgba(0,0,0,0)"
 
     canvas.onmousedown = (e) ->
       drawing = true
-      canvas.onmousemove e
+      x_prev = e.pageX - this.offsetLeft + 1
+      y_prev = e.pageY - this.offsetTop + 1
 
     canvas.onmousemove = (e) ->
       if drawing
-        x = e.pageX - canvas.offsetLeft
-        y = e.pageY - canvas.offsetTop
+        x = e.pageX - this.offsetLeft
+        y = e.pageY - this.offsetTop
 
-        context.save()
-        context.translate x - TOOL_RADIUS, y - TOOL_RADIUS
-        context.fillRect 0, 0, TOOL_RADIUS * 2, TOOL_RADIUS * 2
-        context.restore()
+        context.beginPath();
+        context.moveTo(x, y);
+        context.lineTo(x_prev, y_prev);
+        context.stroke();
+        context.closePath();
+        x_prev = x
+        y_prev = y
 
-    window.onmouseup = (e) -> drawing = false
+    window.onmouseup = (e) ->
+      drawing = false
+      context.clearRect(0, 0, canvas.width, canvas.height) if is_complete(canvas)
 
 
 window["coloringbook_start"] = start
