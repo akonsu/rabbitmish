@@ -16,22 +16,33 @@ is_complete = (canvas) ->
 
 
 start = (container) ->
-  canvas = container.appendChild document.createElement("canvas")
+  canvas = container.appendChild document.createElement "canvas"
+  animation = container.appendChild document.createElement "img"
 
-  canvas.style.background = "#fff url('animals.png') no-repeat center"
-  canvas.width = 640
-  canvas.height = 475
+  container.style.position = "relative"
+
+  canvas.style.background = "#fff url('fantasy-color.jpg') no-repeat center"
+  canvas.style.position = "absolute"
+  canvas.width = 528
+  canvas.height = 529
+
+  animation.style.display = "none"
+  animation.src = "fantasy-animation.gif"
+  animation.style.position = "absolute"
+  animation.style.left = canvas.style.left
+  animation.style.top = canvas.style.top
+  animation.style.zIndex = 1
 
   image = document.createElement("img")
-  image.src = "animals-bw.png"
+  image.src = "fantasy-bw.jpg"
   image.onload = ->
     context = canvas.getContext "2d"
 
     context.drawImage image, 0, 0
-    context.globalCompositeOperation = "copy"
+    context.globalCompositeOperation = "destination-out"
     context.lineCap = "round"
     context.lineWidth = LINE_WIDTH
-    context.strokeStyle = "rgba(0,0,0,0)"
+    context.strokeStyle = "rgba(0,0,0,1)"
 
     canvas.onmousedown = (e) ->
       drawing = true
@@ -53,7 +64,8 @@ start = (container) ->
 
     window.onmouseup = (e) ->
       drawing = false
-      context.clearRect(0, 0, canvas.width, canvas.height) if is_complete(canvas)
+      #context.clearRect(0, 0, canvas.width, canvas.height) if is_complete(canvas)
+      animation.style.display = "" if is_complete(canvas)
 
 
 window["coloringbook_start"] = start
