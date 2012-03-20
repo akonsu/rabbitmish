@@ -5,12 +5,15 @@
     <meta name="ROBOTS" content="ALL" />
     <meta name="Copyright" content="copyright konstantin.co.uk" />
     <title>coloring book</title>
-    <script type="text/coffeescript" src="coloringbook.coffee"></script>
-    <script type="text/coffeescript">
-      coloringbook_start document.getElementById("container"), 528, 529
-    </script>
-    <script type="text/javascript" src="/coffee-script/extras/coffee-script.js"></script>
+    <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script>
+    <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/canvg.js"></script>
+
+    <script type="text/javascript" src="easel.js"></script>
+    <script type="text/javascript" src="tween.js"></script>
+
+    <script type="text/javascript" src="coloringbook.js"></script>
   </head>
-  <body onload=""><div id="container"></div>
-</body>
+  <body onload="game_start(document.getElementById('container'), 650, 474)">
+    <div id="container"></div>
+  </body>
 </html>
