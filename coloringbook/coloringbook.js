@@ -1,5 +1,30 @@
 /* -*- mode:javascript; coding:utf-8; -*- Time-stamp: <coloringbook.js - root> */
 
+(function () {
+    HTMLCanvasElement.prototype.mouseToLocal = function (e) {
+        var offset_x = 0;
+        var offset_y = 0;
+
+        for (var node = this; node; node = node.offsetParent) {
+            offset_x += node.offsetLeft;
+            offset_y += node.offsetTop;
+        }
+
+        var x;
+        var y;
+
+        if (e.pageX || e.pageY) {
+            x = e.pageX;
+            y = e.pageY;
+        }
+        else {
+            x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+            y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+        }
+        return {x: x - offset_x, y: y - offset_y};
+    };
+})();
+
 (function (window) {
     var AUTO_COMPLETE_PERCENT = 0.25;
 
@@ -35,27 +60,32 @@
         canvas.style.position = "absolute";
 
         canvg(canvas, "chickens.svg", { scaleWidth: _actual_size.w,
-                                            scaleHeight: _actual_size.h,
-                                            ignoreDimensions: true,
-                                            ignoreAnimation: true,
-                                            ignoreMouse: true
-                                          });
+                                        scaleHeight: _actual_size.h,
+                                        ignoreDimensions: true,
+                                        ignoreAnimation: true,
+                                        ignoreMouse: true
+                                      });
 
         context.globalCompositeOperation = "destination-out";
         context.lineCap = "round";
+        context.lineJoin = "round";
         context.lineWidth = LINE_WIDTH;
         context.strokeStyle = "rgba(0,0,0,1)";
 
         canvas.onmousedown = function (e) {
+            var p = this.mouseToLocal(e);
+
             drawing = true;
-            x_prev = e.pageX - this.offsetLeft + 1;
-            y_prev = e.pageY - this.offsetTop + 1;
+            x_prev = p.x;
+            y_prev = p.y;
         };
 
         canvas.onmousemove = function (e) {
             if (drawing) {
-                x = e.pageX - this.offsetLeft;
-                y = e.pageY - this.offsetTop;
+                var p = this.mouseToLocal(e);
+
+                var x = p.x;
+                var y = p.y;
 
                 context.beginPath();
                 context.moveTo(x, y);
@@ -97,7 +127,7 @@
         animation_layer.width = line_layer.width;
         animation_layer.height = line_layer.height;
         animation_layer.style.position = "absolute";
-
+/*
         var stage = new Stage(animation_layer);
 
         stage.scaleX = _actual_size.w / REQUIRED_SIZE.w;
@@ -109,6 +139,7 @@
 
         Ticker.setFPS(20);
         Ticker.addListener(stage);
+*/
     }
 
     window['game_start'] = start;
