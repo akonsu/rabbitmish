@@ -1,27 +1,16 @@
 /* -*- mode:javascript; coding:utf-8; -*- Time-stamp: <main.js - root> */
 
 (function () {
-    HTMLCanvasElement.prototype.mouseToLocal = function (e) {
-        var offset_x = 0;
-        var offset_y = 0;
+    HTMLCanvasElement.prototype.touchToLocal = function (e) {
+        var dx = 0;
+        var dy = 0;
+        var t = e.touches[0];
 
         for (var node = this; node; node = node.offsetParent) {
-            offset_x += node.offsetLeft;
-            offset_y += node.offsetTop;
+            dx += node.offsetLeft;
+            dy += node.offsetTop;
         }
-
-        var x;
-        var y;
-
-        if (e.pageX || e.pageY) {
-            x = e.pageX;
-            y = e.pageY;
-        }
-        else {
-            x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-            y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-        }
-        return {x: x - offset_x, y: y - offset_y};
+        return {x: t.pageX - dx, y: t.pageY - dy};
     };
 })();
 
@@ -68,36 +57,20 @@
         var drawing;
         var x_prev;
         var y_prev;
-/*
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        canvas.style.position = "absolute";
-*/
-/*
-        canvg(canvas, "a.svg", { scaleWidth: canvas.width,
-                                        scaleHeight: canvas.height,
-                                        ignoreDimensions: true,
-                                        ignoreAnimation: true,
-                                        ignoreMouse: true
-                                      });
 
-        context.globalCompositeOperation = "destination-out";
-        context.lineCap = "round";
-        context.lineJoin = "round";
-        context.lineWidth = LINE_WIDTH;
-        context.strokeStyle = "rgba(0,0,0,1)";
-*/
-        canvas.onmousedown = function (e) {
-            var p = this.mouseToLocal(e);
+        var on_touchstart = function (e) {
+            var p = this.touchToLocal(e);
 
             drawing = true;
             x_prev = p.x;
             y_prev = p.y;
+
+            e.preventDefault();
         };
 
-        canvas.onmousemove = function (e) {
+        var on_touchmove = function (e) {
             if (drawing) {
-                var p = this.mouseToLocal(e);
+                var p = this.touchToLocal(e);
 
                 var x = p.x;
                 var y = p.y;
@@ -109,15 +82,23 @@
                 context.closePath();
                 x_prev = x;
                 y_prev = y;
+
+                e.preventDefault();
             }
         };
 
-        window.onmouseup = function (e) {
+        var on_touchend = function (e) {
             drawing = false;
             if (is_erased(canvas)) {
                 console.log("erased");
             }
+            e.preventDefault();
         };
+
+        canvas.addEventListener("touchstart", on_touchstart, false);
+        canvas.addEventListener("touchmove", on_touchmove, false);
+        canvas.addEventListener("touchend", on_touchend, false);
+        canvas.addEventListener("touchcancel", on_touchend, false);
 
         return canvas;
     }
