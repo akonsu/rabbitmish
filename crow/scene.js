@@ -11,20 +11,12 @@ var MyLayer = cc.Layer.extend({
 
         cache.addSpriteFrames("Resources/sprites.plist");
 
-        var background = cc.Sprite.createWithSpriteFrameName("trees.png");
-
-        background.setAnchorPoint(cc.PointMake(0, 0));
-        background.setPosition(cc.p(0, 0));
-        this.addChild(background);
-
         this.crowns0 = cc.Sprite.createWithSpriteFrameName("crowns-0.png");
-
         this.crowns0.setAnchorPoint(cc.PointMake(0, 0));
         this.crowns0.setPosition(cc.p(0, 0));
         this.addChild(this.crowns0);
 
         this.crowns1 = cc.Sprite.createWithSpriteFrameName("crowns-1.png");
-
         this.crowns1.setAnchorPoint(cc.PointMake(0, 0));
         this.crowns1.setPosition(cc.p(0, 0));
         this.crowns1.setOpacity(0);
@@ -68,8 +60,20 @@ var MyLayer = cc.Layer.extend({
 var MyScene = cc.Scene.extend({
     onEnter: function () {
         this._super();
+
+        // main layer
         var layer = new MyLayer();
         layer.init();
+
+        // static background layer
+        var background = new cc.LazyLayer();
+        var sprite = cc.Sprite.createWithSpriteFrameName("trees.png");
+
+        sprite.setAnchorPoint(cc.PointMake(0, 0));
+        sprite.setPosition(cc.p(0, 0));
+
+        background.addChild(sprite);
+        this.addChild(background);
         this.addChild(layer);
     }
 });

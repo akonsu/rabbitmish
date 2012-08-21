@@ -18,7 +18,8 @@ var MyApplication = cc.Application.extend({
         };
 
         cc.Loader.shareLoader().preload([
-            {type: "plist", src: "Resources/sprites.plist"}
+            {type: "plist", src: "Resources/sprites.plist"},
+            {type: "image", src: "Resources/sprites.png"}
         ]);
     },
 
