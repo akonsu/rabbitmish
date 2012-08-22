@@ -2,12 +2,12 @@
 
 window.addEventListener("DOMContentLoaded", function () {
     var config = {
-        COCOS2D_DEBUG: 2,
+        COCOS2D_DEBUG: 0,
         box2d: false,
         showFPS: false,
-        frameRate: 60,
+        frameRate: 24,
         tag: "canvas",
-        engineDir: "/cocos2d-html5/cocos2d/",
+        engineDir: "../../cocos2d-html5/cocos2d/",
         appFiles: ["scene.js", "utils.js"],
         mainFile: "main.js"
     };

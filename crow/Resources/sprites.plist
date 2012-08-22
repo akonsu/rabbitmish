@@ -7,93 +7,93 @@
             <key>crowns-0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{0,0},{600,800}}</string>
+                <string>{{0,0},{360,480}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{600,800}}</string>
+                <string>{{0,0},{360,480}}</string>
                 <key>sourceSize</key>
-                <string>{600,800}</string>
+                <string>{360,480}</string>
             </dict>
             <key>crowns-1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{600,0},{600,800}}</string>
+                <string>{{360,0},{360,480}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{600,800}}</string>
+                <string>{{0,0},{360,480}}</string>
                 <key>sourceSize</key>
-                <string>{600,800}</string>
+                <string>{360,480}</string>
             </dict>
             <key>crowns-2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1200,0},{600,800}}</string>
+                <string>{{0,480},{360,480}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{600,800}}</string>
+                <string>{{0,0},{360,480}}</string>
                 <key>sourceSize</key>
-                <string>{600,800}</string>
+                <string>{360,480}</string>
             </dict>
             <key>crowns-3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1800,0},{600,800}}</string>
+                <string>{{360,480},{360,480}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{600,800}}</string>
+                <string>{{0,0},{360,480}}</string>
                 <key>sourceSize</key>
-                <string>{600,800}</string>
+                <string>{360,480}</string>
             </dict>
             <key>crowns-4.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2400,0},{600,800}}</string>
+                <string>{{0,960},{360,480}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{600,800}}</string>
+                <string>{{0,0},{360,480}}</string>
                 <key>sourceSize</key>
-                <string>{600,800}</string>
+                <string>{360,480}</string>
             </dict>
             <key>crowns-5.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{3000,0},{600,800}}</string>
+                <string>{{360,960},{360,480}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{600,800}}</string>
+                <string>{{0,0},{360,480}}</string>
                 <key>sourceSize</key>
-                <string>{600,800}</string>
+                <string>{360,480}</string>
             </dict>
             <key>trees.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{0,800},{600,800}}</string>
+                <string>{{0,1440},{360,480}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{600,800}}</string>
+                <string>{{0,0},{360,480}}</string>
                 <key>sourceSize</key>
-                <string>{600,800}</string>
+                <string>{360,480}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -103,9 +103,9 @@
             <key>realTextureFileName</key>
             <string>sprites.png</string>
             <key>size</key>
-            <string>{3600,1600}</string>
+            <string>{720,1920}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:00ad25927b904fabea8b2afe60d2c483$</string>
+            <string>$TexturePacker:SmartUpdate:ebd374d22e8690f92435cce53b30abea$</string>
             <key>textureFileName</key>
             <string>sprites.png</string>
         </dict>
